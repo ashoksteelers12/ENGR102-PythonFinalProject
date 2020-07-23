@@ -1,16 +1,3 @@
-# By submitting this assignment, all team members agree to the following:
-#"Aggies do not lie, cheat, or steal, or tolerate those who do"
-#"I have not given or received any unauthorized aid on this assignment"
-#"As a team, we have gone through all required sections of the tutorial, and each team member understands the material."
-#
-# Names: Omer Coban
-#        Nicholas Pena
-#        Sebastian Monroe
-#        Ashok Meyyappan
-# Section:    507
-# Assignment:  Final Project
-# Date:       12/7/2018
-
 import matplotlib.pyplot as plt
 import numpy as np
 from math import *
