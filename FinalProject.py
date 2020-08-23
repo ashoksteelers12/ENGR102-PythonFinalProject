@@ -171,8 +171,8 @@ while i < 26:
             for k in range(len(countries_emissions)):
                 if j == k:
                     consumers_2015.append(consumers[j][i])
-#Manually entering two small data sets 
-#Had trouble reading these numbers from files, and since they were not too large, manually inserted into array
+                    
+#Manually entering in two small data sets for carbon emissions vs consumption
 num1 = np.array([9040.74, 4997.5, 2066.01, 1468.99, 1141.58, 729.77, 585.99, 552.4, 549.23, 531.46, 450.79, 442.31,
                441.91, 427.57, 389.75, 380.93, 330.75, 317.22, 290.49, 282.4])
 num2 = np.array([53.258962, 40.74455738, 246.2017574, 308.1048467, 151.9761675, 72.82964335, 95.56215343, 22.04019689,
