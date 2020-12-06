@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import *
 import csv
+
 #EnergyConsumers.txt
 
 consumers =[]
@@ -17,16 +18,18 @@ for i in range(len(yearsdat)):
     yearsdat[i] = int(yearsdat[i])
 years_data = yearsdat.copy()
 del years_data[-1]
+
 countries =[]
+consumption_2015 = []
 
 for line in data:
     linedata = line.split("\t")
     countries.append(linedata[0])
+    consumption_2015.append(linedata[26])
     del linedata[0]
     for i in range(len(linedata)):
         linedata[i] = float(linedata[i])
     consumers.append(linedata)
-
 
 for i in range(len(consumers)):
     plt.hist(consumers[i],bins=50)
@@ -34,7 +37,9 @@ for i in range(len(consumers)):
     plt.ylabel('Number of Years')
     plt.title(countries[i])
     plt.grid(True)
+    #plt.savefig('EnergyConsumption_' + countries[i] + '.png')
     plt.show()
+
 data.close()
 
 #EnergyRawDataFinal.txt
@@ -75,10 +80,13 @@ for i in range(len(countries)):
     ax2.set_ylabel('Natural Gas')
     plt.title('Electricity vs Natural Gas for %s' %(countries[i]))
     fig.tight_layout()
+    #plt.savefig('Electricity_NaturalGas_' + countries[i] + '.png')
     plt.show()
 
 data1.close()
-#EnergyCOnsumers.txt for Ind
+
+#EnergyCOnsumers.txt for Industrial Usage
+
 ind = np.arange(len(consumers)*len(consumers[0])).reshape(len(consumers), len(consumers[0]))
 for i in range(len(consumers)):
     for j in range(len(consumers[0])):
@@ -96,9 +104,10 @@ for i in range(len(consumers)):
     plt.ylabel('Number of Years')
     plt.title(countries[i])
     plt.grid(True)
+    #plt.savefig('IndustrialUsage_' + countries[i] + '.png')
     plt.show()
 
-#China consumption
+#China Consumption
 
 for i in range(len(countries)):
     if countries[i] == 'China':
@@ -107,9 +116,11 @@ for i in range(len(countries)):
         plt.ylabel('Number of Years')
         plt.title(countries[i])
         plt.grid(True)
+        #plt.savefig('ChinaConsumption.png')
         plt.show()
 
 #Continents
+
 euro = np.zeros(len(yearsdat))
 n_amer = np.zeros(len(yearsdat))
 s_amer = np.zeros(len(yearsdat))
@@ -146,53 +157,55 @@ for i in range(len(continents)):
     plt.ylabel('Number of Years')
     plt.title(continent_names[i])
     plt.grid(True)
+    #plt.savefig('OnlyResidential_' + continent_names[i] + '.png')
     plt.show()
 
 #CarbonEmmissions.txt
 
-data2 = open('CarbonEmissions.txt')
-header = data2.readline()
-carbon_emissions = []
+data2 = open("CarbonEmissions.txt")
+
+categs = data2.readline()
 countries_emissions = []
+carbon_emissions = []
+
 for line in data2:
     linedata = line.split("\t")
+    num = linedata[2]
+    if "\n" in linedata[2]:
+        num = linedata[2][:-1]
     countries_emissions.append(linedata[1])
-    del linedata[0]
-    del linedata[0]
-    for i in range(len(linedata)):
-        linedata[i] = float(linedata[i])
-    carbon_emissions.append(linedata)
-consumers_2015 = []
-i = 0
-while i < 26:
-    i+=1
-    if i == 25:
-        for j in range(len(countries)):
-            for k in range(len(countries_emissions)):
-                if j == k:
-                    consumers_2015.append(consumers[j][i])
-                    
-#Manually entering in two small data sets for carbon emissions vs consumption
-num1 = np.array([9040.74, 4997.5, 2066.01, 1468.99, 1141.58, 729.77, 585.99, 552.4, 549.23, 531.46, 450.79, 442.31,
-               441.91, 427.57, 389.75, 380.93, 330.75, 317.22, 290.49, 282.4])
-num2 = np.array([53.258962, 40.74455738, 246.2017574, 308.1048467, 151.9761675, 72.82964335, 95.56215343, 22.04019689,
-               32.40854265, 120.1138679, 47.18147931, 181.1045349, 29.74420869, 129.7818635, 74.68421425, 689.7145147,
-               90.77124003, 44.91438528, 274.0976469, 2203.006871])
+    carbon_emissions.append(num)
+
+countries_list_2015 = []
+consumption_list_2015 = []
+
+for e_name in countries_emissions:
+  for name in countries:
+    if name == e_name:
+      countries_list_2015.append(e_name)
+      consumption_list_2015.append(consumption_2015[countries.index(name)])
+      
+consumption_list_2015 = list(map(float, consumption_list_2015))
+carbon_emissions = list(map(float, carbon_emissions))
+
 val = np.arange(len(carbon_emissions))
 length = 0.45
-fig, axes = plt.subplots(ncols=1, nrows=1)
+fig, axes = plt.subplots(ncols=1, nrows=1, figsize=(30,10))
 plt.title('Carbon Emissions vs Consumption for 2015')
 plt.xlabel('20 Countries')
 plt.ylabel('Mt/Yr')
-axes.bar(val, num1, width=-1.*length, align='edge', label="Carbon Emissions")
-axes.bar(val, num2, width=length, align='edge', label="Consumption for 2015")
+axes.bar(val, carbon_emissions, width=-1.*length, align='edge', label="Carbon Emissions")
+axes.bar(val, consumption_list_2015, width=length, align='edge', label="Consumption for 2015")
 axes.set_xticks(val)
-axes.set_xticklabels(['CN', 'US', 'IN', 'RU', 'JP', 'HR', 'SK', 'IR', 'CA', 'SC', 'BR', 'MX', 'ID', 'SA', 'UK', 'AU',
-                      'IT', 'TR', 'FR', 'PO'])
+axes.set_xticklabels(countries_list_2015)
 plt.legend()
+#plt.savefig('CarbonEmissions_vs_Consumption2015.png')
 plt.show()
 
+data2.close()
+
 #Answering Questions
+
 print("What countries had the highest energy usage? India, China, and USA were shown to have the highest.")
 print("In what continent are they located? The higher energy users are primarily located in Asia, except with USA"
       "in North America. One can argue USA makes up a lot of North America geographical wise, thus claiming both"
