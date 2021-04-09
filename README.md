@@ -1,4 +1,4 @@
-# ENGR102-PythonFinalProject
+# Energy-Consumption-Analysis
 
 You are working in a firm that requires you to perform an engineering analysis of energy consumption in
 the world, with particular emphasis on potential impact on the levels of carbon dioxide distributed in the
