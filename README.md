@@ -67,7 +67,7 @@ data1.close()
 
 ### Results
 
-Since there are a lot of image, I don't want to paste all of them here. They can be viewed in the Output_Images folder. Since the code for energy types was displayed above as an example, let's see graphs of that for the United States, China, and India (3 largely populated countries). 
+Since there are a lot of output images, I don't want to paste all of them here. They can be viewed in the Output_Images folder. Since the code for energy types was displayed above as an example, let's see graphs of that for the United States, China, and India (3 largely populated countries). 
 
 <img src="Output_Images/Electricity_NaturalGas_United States.png" alt="USA"> <img src="Output_Images/Electricity_NaturalGas_China.png" alt="China"> <img src="Output_Images/Electricity_NaturalGas_India.png" alt="India">
 
